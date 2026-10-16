@@ -1,0 +1,122 @@
+<div class="mapa" [class.mini]="modo() === 'mini'">
+  @if (modo() === 'completo') {
+    <div class="cabeza"><ng-content /></div>
+  }
+  <div class="lienzo">
+    <svg
+      [attr.viewBox]="'0 0 ' + ancho + ' ' + alto"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      [attr.aria-label]="descripcion()"
+    >
+      <rect class="fondo" x="0" y="0" [attr.width]="ancho" [attr.height]="alto" />
+
+      @for (g of grilla; track g.id) {
+        <line class="grilla" [attr.x1]="g.x1" [attr.y1]="g.y1" [attr.x2]="g.x2" [attr.y2]="g.y2" />
+      }
+
+      <path class="zona zona-bolivia" [attr.d]="zonaBolivia()" />
+      <path class="zona zona-paraguay" [attr.d]="zonaParaguay()" />
+
+      <text class="pais" [attr.x]="textoBolivia.x" [attr.y]="textoBolivia.y">BOLIVIA</text>
+      <text class="pais" [attr.x]="textoParaguay.x" [attr.y]="textoParaguay.y">PARAGUAY</text>
+      <text class="pais" [attr.x]="textoArgentina.x" [attr.y]="textoArgentina.y">ARGENTINA</text>
+
+      <path class="rio" [attr.d]="rioParaguay" />
+      <path class="rio" [attr.d]="rioPilcomayo" />
+
+      <path class="frente" pathLength="1" [attr.d]="frente()" />
+
+      @for (l of lugares; track l.nombre) {
+        <g class="lugar">
+          <circle [attr.cx]="l.x" [attr.cy]="l.y" r="3.5" />
+          <text [attr.x]="l.ancla === 'start' ? l.x + 9 : l.x - 9" [attr.y]="l.y + 4" [attr.text-anchor]="l.ancla">
+            {{ l.nombre }}
+          </text>
+        </g>
+      }
+
+      @for (m of marcadores(); track m.id) {
+        <g
+          class="marca"
+          [class.visible]="m.visible"
+          [class.activa]="m.activa"
+          [class.tenue]="m.tenue"
+          [attr.data-ganador]="m.ganador"
+          [attr.role]="modo() === 'mini' ? null : 'button'"
+          [attr.tabindex]="modo() === 'mini' || !m.visible ? null : 0"
+          [attr.aria-label]="m.nombre"
+          (click)="irA(m.id)"
+          (keydown.enter)="irA(m.id)"
+          (keydown.space)="irA(m.id); $event.preventDefault()"
+        >
+          <circle class="halo" [attr.cx]="m.x" [attr.cy]="m.y" r="15" />
+          <circle class="punto" [attr.cx]="m.x" [attr.cy]="m.y" r="6" />
+          <title>{{ m.nombre }}</title>
+        </g>
+      }
+    </svg>
+  </div>
+
+  @if (modo() === 'completo') {
+    <div class="mando">
+      <button type="button" class="reproducir" (click)="alternarReproduccion()">
+        @if (reproduciendo()) {
+          <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" /><rect x="9.5" y="2" width="3.5" height="12" /></svg>
+          <span>Pausar</span>
+        } @else {
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2 L14 8 L4 14 Z" /></svg>
+          <span>Reproducir</span>
+        }
+      </button>
+
+      <div class="regla">
+        <div class="marcas" aria-hidden="true">
+          @for (t of marcasTiempo; track t.id) {
+            <span class="marca-tiempo" [style.left.%]="t.izq"></span>
+          }
+        </div>
+        <input
+          type="range"
+          min="0"
+          [max]="totalDias"
+          step="1"
+          [value]="dias()"
+          (input)="alMover($event)"
+          aria-label="Fecha del mapa, entre junio de 1932 y junio de 1935"
+          [attr.aria-valuetext]="fechaTexto()"
+        />
+        <div class="anios" aria-hidden="true">
+          @for (a of anios; track a.anio) {
+            <span [style.left.%]="a.izq">{{ a.anio }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <aside class="panel">
+      <p class="fecha">{{ fechaTexto() }}</p>
+      <h2>{{ etapa().titulo }}</h2>
+      <p class="hito">Último hito registrado: {{ etapaFecha() }}</p>
+      <p class="texto">{{ etapa().texto }}</p>
+    </aside>
+
+    @if (batallaActiva(); as b) {
+      <section class="seleccion" [attr.data-ganador]="b.ganador" aria-live="polite">
+        <h3>{{ b.nombre }}</h3>
+        <p class="resultado">{{ b.resultado }}</p>
+        <p class="resumen">{{ b.resumen }}</p>
+        <a [routerLink]="['/batallas', b.id]">Leer la batalla completa</a>
+      </section>
+    }
+  }
+
+  <ul class="leyenda">
+    <li><span class="cuadro bolivia"></span>Territorio bajo control boliviano</li>
+    <li><span class="cuadro paraguay"></span>Territorio bajo control paraguayo</li>
+    <li><span class="circulo bolivia"></span>Batalla con victoria boliviana</li>
+    <li><span class="circulo paraguay"></span>Batalla con victoria paraguaya</li>
+    <li><span class="circulo neutro"></span>Sin ganador definido</li>
+    <li class="aviso">Mapa esquemático: las posiciones son aproximadas y no están a escala.</li>
+  </ul>
+</div>

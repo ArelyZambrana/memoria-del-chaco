@@ -1,0 +1,103 @@
+import { PreguntaQuiz } from '../models';
+
+export const PREGUNTAS: PreguntaQuiz[] = [
+  {
+    id: 'q1',
+    enunciado: '¿Qué fortín fue destruido en Pitiantuta, el choque que dio inicio a la guerra abierta?',
+    opciones: ['Boquerón', 'Carlos Antonio López', 'Ballivián', 'Nanawa'],
+    correcta: 1,
+    explicacion: 'El 15 de junio de 1932, un destacamento boliviano atacó y destruyó el fortín paraguayo Carlos Antonio López.',
+  },
+  {
+    id: 'q2',
+    enunciado: '¿Cuánto duró el cerco de Boquerón?',
+    opciones: ['Tres días', 'Veinte días', 'Dos meses', 'Un año'],
+    correcta: 1,
+    explicacion: 'Del 9 al 29 de septiembre de 1932: unos veinte días, hasta la rendición de la guarnición.',
+  },
+  {
+    id: 'q3',
+    enunciado: '¿Quién comandó al ejército paraguayo durante la guerra?',
+    opciones: ['Eusebio Ayala', 'Rafael Franco', 'José Félix Estigarribia', 'Luis Irrazábal'],
+    correcta: 2,
+    explicacion: 'Estigarribia dirigió las operaciones paraguayas durante toda la guerra. Ayala era el presidente; Franco e Irrazábal mandaban divisiones.',
+  },
+  {
+    id: 'q4',
+    enunciado: '¿Con qué apodo se conoce a las batallas de Nanawa?',
+    opciones: ['El Stalingrado del Chaco', 'El Verdún sudamericano', 'La Troya del Pilcomayo', 'El Waterloo boliviano'],
+    correcta: 1,
+    explicacion: 'Se las comparó con la batalla de Verdún, de la Primera Guerra Mundial, por lo sangrientas que fueron.',
+  },
+  {
+    id: 'q5',
+    enunciado: '¿Qué divisiones bolivianas se rindieron en Campo Vía el 11 de diciembre de 1933?',
+    opciones: ['La 1.ª y la 2.ª', 'La 4.ª y la 9.ª', 'La 6.ª y la 7.ª', 'La 3.ª y la 5.ª'],
+    correcta: 1,
+    explicacion: 'Las divisiones 4.ª y 9.ª quedaron cercadas. Poco después, Kundt fue relevado del mando.',
+  },
+  {
+    id: 'q6',
+    enunciado: '¿Quién reemplazó a Hans Kundt al frente del ejército boliviano?',
+    opciones: ['Germán Busch', 'Bernardino Bilbao Rioja', 'Enrique Peñaranda', 'Manuel Marzana'],
+    correcta: 2,
+    explicacion: 'Salamanca lo relevó el 12 de diciembre de 1933 y nombró a Enrique Peñaranda.',
+  },
+  {
+    id: 'q7',
+    enunciado: '¿Cómo terminó la batalla de Cañada Strongest, en mayo de 1934?',
+    opciones: ['Victoria boliviana', 'Victoria paraguaya', 'Empate sin ganador', 'Se suspendió por lluvias'],
+    correcta: 0,
+    explicacion: 'Fue una emboscada boliviana: unos 1.500 prisioneros paraguayos. Se considera la mayor victoria boliviana de la guerra.',
+  },
+  {
+    id: 'q8',
+    enunciado: '¿Qué ocurrió el 27 de noviembre de 1934?',
+    opciones: [
+      'Se firmó la paz en Buenos Aires',
+      'Los militares depusieron al presidente Salamanca',
+      'Cayó Villa Montes',
+      'Murió Estigarribia',
+    ],
+    correcta: 1,
+    explicacion: 'Un grupo de oficiales encabezado por el capitán Germán Busch lo arrestó en Villa Montes. Lo sucedió José Luis Tejada Sorzano.',
+  },
+  {
+    id: 'q9',
+    enunciado: '¿Cuándo se callaron las armas en el frente?',
+    opciones: ['12 de junio de 1932', '14 de junio de 1935', '21 de julio de 1938', '1 de enero de 1936'],
+    correcta: 1,
+    explicacion: 'El cese formal se firmó el 12 de junio en Buenos Aires, y al mediodía del 14 llegó la noticia al frente.',
+  },
+  {
+    id: 'q10',
+    enunciado: '¿Qué se firmó el 21 de julio de 1938?',
+    opciones: [
+      'El armisticio de Campo Vía',
+      'El Tratado de Paz, Amistad y Límites',
+      'El acuerdo definitivo de límites',
+      'La rendición de Boquerón',
+    ],
+    correcta: 1,
+    explicacion: 'Dividió la zona en disputa: cerca de tres cuartas partes quedaron bajo soberanía paraguaya. El acuerdo definitivo de límites llegó en 2009.',
+  },
+  {
+    id: 'q11',
+    enunciado: '¿Cuál es la estimación más citada del total de muertos de la guerra?',
+    opciones: ['Unos 5.000', 'Unos 20.000', 'Cerca de 100.000', 'Más de un millón'],
+    correcta: 2,
+    explicacion: 'El historiador Eric Hobsbawm calcula unos 100.000 muertos entre ambos países, aunque las cifras varían según la fuente.',
+  },
+  {
+    id: 'q12',
+    enunciado: '¿Por qué fue tan decisiva la falta de agua en la guerra?',
+    opciones: [
+      'Porque los ríos estaban prohibidos para los soldados',
+      'Porque en el centro del Chaco el agua era escasa y salobre, y varias guarniciones se rindieron por sed',
+      'Porque solo Bolivia tenía pozos',
+      'Porque no llovió en tres años',
+    ],
+    correcta: 1,
+    explicacion: 'El agua escasa y los pozos contaminados causaron disentería y obligaron a rendirse a grandes fuerzas, como en Boquerón.',
+  },
+];

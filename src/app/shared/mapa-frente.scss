@@ -1,0 +1,421 @@
+:host {
+  display: block;
+  --mp-fondo: #17211b;
+  --mp-bolivia: #d9a441;
+  --mp-paraguay: #6fb1cf;
+  --mp-hueso: #f3f4ec;
+}
+
+.mapa {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-areas:
+    'cabeza lienzo'
+    'panel lienzo'
+    'seleccion mando'
+    'leyenda leyenda';
+  gap: 1.25rem 3rem;
+  align-items: start;
+
+  &.mini {
+    display: block;
+  }
+}
+
+.cabeza {
+  grid-area: cabeza;
+}
+
+.lienzo {
+  grid-area: lienzo;
+  margin: 0;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    background: var(--mp-fondo);
+  }
+}
+
+.mini .lienzo svg {
+  max-height: none;
+}
+
+.fondo {
+  fill: var(--mp-fondo);
+}
+
+.grilla {
+  stroke: rgba(243, 244, 236, 0.07);
+  stroke-width: 1;
+}
+
+.zona {
+  transition: d 0.2s linear;
+}
+.zona-bolivia {
+  fill: rgba(217, 164, 65, 0.2);
+}
+.zona-paraguay {
+  fill: rgba(111, 177, 207, 0.22);
+}
+
+.pais {
+  font-family: 'Stardos Stencil', 'Arial Narrow', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: 0.12em;
+  fill: rgba(243, 244, 236, 0.16);
+  pointer-events: none;
+}
+
+.rio {
+  fill: none;
+  stroke: var(--mp-paraguay);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+
+.frente {
+  fill: none;
+  stroke: var(--mp-hueso);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  animation: trazar 1.8s ease-out both;
+}
+
+@keyframes trazar {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.lugar {
+  circle {
+    fill: var(--mp-hueso);
+  }
+  text {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 15px;
+    fill: rgba(243, 244, 236, 0.85);
+    paint-order: stroke;
+    stroke: var(--mp-fondo);
+    stroke-width: 4px;
+  }
+}
+
+.marca {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  outline: none;
+
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  &.tenue {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .punto {
+    fill: var(--mp-hueso);
+    stroke: var(--mp-fondo);
+    stroke-width: 2;
+  }
+  .halo {
+    fill: none;
+    stroke: var(--mp-hueso);
+    stroke-width: 2;
+    opacity: 0;
+  }
+
+  &[data-ganador='bolivia'] .punto {
+    fill: var(--mp-bolivia);
+  }
+  &[data-ganador='paraguay'] .punto {
+    fill: var(--mp-paraguay);
+  }
+
+  &.activa .halo {
+    opacity: 1;
+  }
+  &:focus-visible .halo {
+    opacity: 1;
+    stroke-width: 3;
+  }
+}
+
+.mando {
+  grid-area: mando;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.reproducir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+  padding: 0.55rem 0.9rem;
+  border: 1.5px solid var(--mp-hueso);
+  background: transparent;
+  color: var(--mp-hueso);
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  min-width: 8.5rem;
+  justify-content: center;
+
+  svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    fill: currentColor;
+  }
+  &:hover {
+    background: rgba(243, 244, 236, 0.12);
+  }
+  &:focus-visible {
+    outline: 3px solid var(--mp-bolivia);
+    outline-offset: 2px;
+  }
+}
+
+.regla {
+  position: relative;
+  flex: 1;
+  padding-bottom: 1.4rem;
+
+  input[type='range'] {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    margin: 0;
+    height: 1.75rem;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+      height: 4px;
+      background: rgba(243, 244, 236, 0.45);
+    }
+    &::-moz-range-track {
+      height: 4px;
+      background: rgba(243, 244, 236, 0.45);
+    }
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 1.1rem;
+      height: 1.1rem;
+      margin-top: -0.45rem;
+      border-radius: 50%;
+      background: var(--mp-hueso);
+      border: 3px solid var(--mp-fondo);
+      box-shadow: 0 0 0 2px var(--mp-hueso);
+    }
+    &::-moz-range-thumb {
+      width: 0.85rem;
+      height: 0.85rem;
+      border-radius: 50%;
+      background: var(--mp-hueso);
+      border: 3px solid var(--mp-fondo);
+      box-shadow: 0 0 0 2px var(--mp-hueso);
+    }
+    &:focus-visible {
+      outline: 3px solid var(--mp-bolivia);
+      outline-offset: 4px;
+    }
+  }
+}
+
+.marcas {
+  position: absolute;
+  inset: 0 0 1.4rem 0;
+  pointer-events: none;
+}
+.marca-tiempo {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 0.9rem;
+  margin-top: -0.45rem;
+  background: var(--mp-bolivia);
+  opacity: 0.9;
+}
+
+.anios {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.2rem;
+  font-size: 0.85rem;
+  color: rgba(243, 244, 236, 0.75);
+
+  span {
+    position: absolute;
+    transform: translateX(0);
+  }
+}
+
+.panel {
+  grid-area: panel;
+  align-self: start;
+  color: var(--mp-hueso);
+
+  .fecha {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--mp-bolivia);
+  }
+  h2 {
+    margin: 0.35rem 0 0.75rem;
+    font-family: 'Stardos Stencil', 'Arial Narrow', sans-serif;
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+    line-height: 1.15;
+    font-weight: 700;
+  }
+  .hito {
+    margin: -0.4rem 0 0.75rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: rgba(243, 244, 236, 0.75);
+  }
+  .texto {
+    margin: 0 0 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 38ch;
+  }
+}
+
+.seleccion {
+  grid-area: seleccion;
+  color: var(--mp-hueso);
+  padding-top: 1.1rem;
+  border-top: 2px solid var(--mp-hueso);
+
+  &[data-ganador='bolivia'] {
+    border-top-color: var(--mp-bolivia);
+  }
+  &[data-ganador='paraguay'] {
+    border-top-color: var(--mp-paraguay);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 650;
+  }
+  .resultado {
+    margin: 0.2rem 0 0.6rem;
+    font-size: 0.95rem;
+    color: rgba(243, 244, 236, 0.8);
+    font-style: italic;
+  }
+  .resumen {
+    margin: 0 0 0.75rem;
+    line-height: 1.55;
+    max-width: 44ch;
+    font-size: 1rem;
+  }
+  a {
+    color: var(--mp-hueso);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    font-weight: 600;
+
+    &:hover {
+      color: var(--mp-bolivia);
+    }
+    &:focus-visible {
+      outline: 3px solid var(--mp-bolivia);
+      outline-offset: 3px;
+    }
+  }
+}
+
+.leyenda {
+  grid-area: leyenda;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: inherit;
+  opacity: 0.88;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .aviso {
+    flex-basis: 100%;
+    font-style: italic;
+  }
+  .cuadro,
+  .circulo {
+    display: inline-block;
+    width: 0.9rem;
+    height: 0.9rem;
+    border: 1.5px solid currentColor;
+  }
+  .circulo {
+    border-radius: 50%;
+  }
+  .bolivia {
+    background: var(--mp-bolivia);
+    border-color: var(--mp-bolivia);
+  }
+  .paraguay {
+    background: var(--mp-paraguay);
+    border-color: var(--mp-paraguay);
+  }
+  .neutro {
+    background: var(--mp-hueso);
+  }
+}
+
+.mini .leyenda {
+  margin-top: 0.75rem;
+  color: var(--mp-texto, #1b261f);
+}
+
+@media (max-width: 62rem) {
+  .mapa {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'cabeza'
+      'lienzo'
+      'mando'
+      'panel'
+      'seleccion'
+      'leyenda';
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frente {
+    animation: none;
+  }
+  .marca {
+    transition: none;
+  }
+}

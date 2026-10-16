@@ -1,0 +1,38 @@
+<a class="saltar" href="#contenido" (click)="saltar($event)">Saltar al contenido</a>
+
+<header class="cabecera">
+  <div class="contenedor-ancho barra">
+    <a routerLink="/" class="marca" aria-label="Memoria del Chaco, ir al inicio">Memoria del Chaco</a>
+
+    <nav aria-label="Secciones">
+      <ul>
+        @for (e of enlaces; track e.ruta) {
+          <li>
+            <a [routerLink]="e.ruta" routerLinkActive="activo" ariaCurrentWhenActive="page">{{ e.texto }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <form class="buscador" role="search" (submit)="buscar($event, q.value)">
+      <label class="solo-lectores" for="busqueda">Buscar en la enciclopedia</label>
+      <input #q id="busqueda" type="search" placeholder="Buscar" autocomplete="off" />
+    </form>
+  </div>
+</header>
+
+<main id="contenido" tabindex="-1">
+  <router-outlet />
+</main>
+
+<footer class="pie">
+  <div class="contenedor-ancho">
+    <p>
+      Enciclopedia interactiva multimedia sobre la Guerra del Chaco (1932-1935). Cada ficha cita sus fuentes; donde los
+      datos difieren, se indica. Las posiciones del mapa son esquemáticas.
+    </p>
+    <p class="pie-acciones">
+      <button type="button" (click)="progreso.reiniciar()">Borrar mi progreso en este navegador</button>
+    </p>
+  </div>
+</footer>
